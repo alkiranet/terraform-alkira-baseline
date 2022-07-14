@@ -1,0 +1,14 @@
+---
+groups:
+  - name: 'nonprod'
+    description: 'Non-Production environments'
+    type: 'connector'
+
+  - name: 'prod'
+    description: 'Production environments'
+    type: 'connector'
+
+  - name: 'remote'
+    description: 'SecureConnect VPN users'
+    type: 'user'
+...

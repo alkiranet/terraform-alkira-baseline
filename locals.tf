@@ -1,0 +1,18 @@
+locals {
+
+  # segment configuration
+  segment_file         = "./config/segments.yml"
+  segment_file_content = fileexists(local.segment_file) ? file(local.segment_file) : file("${path.module}/templates/segments.yml")
+  segment_config       = yamldecode(local.segment_file_content)
+
+  # group configuration
+  group_file         = "./config/groups.yml"
+  group_file_content = fileexists(local.group_file) ? file(local.group_file) : file("${path.module}/templates/groups.yml")
+  group_config       = yamldecode(local.group_file_content)
+
+  # billing tag configuration
+  tag_file         = "./config/billing_tags.yml"
+  tag_file_content = fileexists(local.tag_file) ? file(local.tag_file) : file("${path.module}/templates/billing_tags.yml")
+  tag_config       = yamldecode(local.tag_file_content)
+
+}

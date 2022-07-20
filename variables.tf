@@ -15,3 +15,9 @@ variable "create_billing_tags" {
   type        = bool
   default     = false
 }
+
+variable "create_lists" {
+  description = "Controls if lists are created"
+  type        = bool
+  default     = false
+}

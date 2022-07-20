@@ -15,4 +15,9 @@ locals {
   tag_file_content = fileexists(local.tag_file) ? file(local.tag_file) : file("${path.module}/templates/billing_tags.yml")
   tag_config       = yamldecode(local.tag_file_content)
 
+  # list configuration
+  list_file         = "./config/lists.yml"
+  list_file_content = fileexists(local.list_file) ? file(local.list_file) : file("${path.module}/templates/lists.yml")
+  list_config       = yamldecode(local.list_file_content)
+
 }

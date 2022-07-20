@@ -24,4 +24,9 @@ locals {
   tag_file_content = fileexists(local.tag_file) ? file(local.tag_file) : file("${path.module}/templates/tags.yml")
   tag_config       = yamldecode(local.tag_file_content)
 
+  # rule configuration
+  rule_file         = "${var.config_path}/rules.yml"
+  rule_file_content = fileexists(local.rule_file) ? file(local.rule_file) : file("${path.module}/templates/rules.yml")
+  rule_config       = yamldecode(local.rule_file_content)
+
 }

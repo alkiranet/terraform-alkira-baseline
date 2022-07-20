@@ -1,5 +1,9 @@
 locals {
 
+  # defaults
+  asn         = "65514"
+  description = "Created by Terraform"
+
   # segment configuration
   segment_file         = "./config/segments.yml"
   segment_file_content = fileexists(local.segment_file) ? file(local.segment_file) : file("${path.module}/templates/segments.yml")

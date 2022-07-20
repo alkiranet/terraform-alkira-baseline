@@ -15,8 +15,8 @@ locals {
   group_config       = yamldecode(local.group_file_content)
 
   # billing tag configuration
-  tag_file         = "./config/billing_tags.yml"
-  tag_file_content = fileexists(local.tag_file) ? file(local.tag_file) : file("${path.module}/templates/billing_tags.yml")
+  tag_file         = "./config/tags.yml"
+  tag_file_content = fileexists(local.tag_file) ? file(local.tag_file) : file("${path.module}/templates/tags.yml")
   tag_config       = yamldecode(local.tag_file_content)
 
   # list configuration

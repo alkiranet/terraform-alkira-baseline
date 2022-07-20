@@ -10,7 +10,7 @@ variable "create_groups" {
   default     = false
 }
 
-variable "create_billing_tags" {
+variable "create_tags" {
   description = "Controls if billing tags are created"
   type        = bool
   default     = false

@@ -9,8 +9,8 @@ resource "alkira_segment" "segment" {
 
   # Segment values
   name = each.value.name
-  asn  = each.value.asn
   cidr = each.value.cidr
+  asn  = try(each.value.asn, local.asn)
 
 }
 
@@ -25,7 +25,7 @@ resource "alkira_group_connector" "group" {
 
   # Group values
   name        = each.value.name
-  description = each.value.description
+  description = try(each.value.description, local.description) 
 
 }
 
@@ -40,7 +40,7 @@ resource "alkira_group_user" "group" {
 
   # Group values
   name        = each.value.name
-  description = each.value.description
+  description = try(each.value.description, local.description)
 
 }
 
@@ -55,7 +55,7 @@ resource "alkira_billing_tag" "tag" {
 
   # Tag values
   name        = each.value.name
-  description = each.value.description
+  description = try(each.value.description, local.description)
 
 }
 
@@ -70,7 +70,7 @@ resource "alkira_policy_prefix_list" "list" {
 
   # Prefix values
   name        = each.value.name
-  description = try(each.value.description, "Created by Terraform")
+  description = try(each.value.description, local.description)
   prefixes    = each.value.prefixes
 
 }

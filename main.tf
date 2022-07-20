@@ -50,7 +50,7 @@ resource "alkira_billing_tag" "tag" {
   # Parse tags
   for_each = {
     for tag in local.tag_config.tags : tag.name => tag
-    if var.create_billing_tags == true
+    if var.create_tags == true
   }
 
   # Tag values

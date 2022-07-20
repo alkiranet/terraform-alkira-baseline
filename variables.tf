@@ -1,3 +1,9 @@
+variable "config_path" {
+  description = "Path to .yml files"
+  type        = string
+  default     = "./config/"
+}
+
 variable "create_segments" {
   description = "Controls if segments are created"
   type        = bool

@@ -1,0 +1,14 @@
+---
+rules:
+  - name:
+    type:
+    description:
+    rule_action:
+    protocol:
+    src_prefix_list:
+    dst_prefix_list:
+    src_ports:
+    dst_ports:
+    dscp:
+    rule_action_service_types:
+...

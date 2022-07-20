@@ -1,3 +1,37 @@
+/*
+Alkira data sources
+https://registry.terraform.io/providers/alkiranet/alkira/latest/docs
+*/
+data "alkira_policy_prefix_list" "src_prefix_list" {
+
+  for_each = {
+    for rule in local.rule_config.rules : rule.name => rule
+    if var.create_rules == true
+  }
+
+  depends_on = [
+    alkira_policy_prefix_list.list
+  ]
+
+  name = each.value.src_prefix_list
+
+}
+
+data "alkira_policy_prefix_list" "dst_prefix_list" {
+
+  for_each = {
+    for rule in local.rule_config.rules : rule.name => rule
+    if var.create_rules == true
+  }
+
+  depends_on = [
+    alkira_policy_prefix_list.list
+  ]
+
+  name = each.value.dst_prefix_list
+
+}
+
 # Create segments
 resource "alkira_segment" "segment" {
 
@@ -72,5 +106,28 @@ resource "alkira_policy_prefix_list" "list" {
   name        = each.value.name
   description = try(each.value.description, local.description)
   prefixes    = each.value.prefixes
+
+}
+
+# Create policy rules
+resource "alkira_policy_rule" "rule" {
+
+  # Parse rules
+  for_each = {
+    for rule in local.rule_config.rules : rule.name => rule
+    if var.create_rules == true && rule.type == "traffic"
+  }
+
+  # Rule values
+  name                      = each.value.name
+  description               = try(each.value.description, "Created by Terraform")
+  rule_action               = try(each.value.rule_action, "ALLOW")
+  protocol                  = try(each.value.protocol, "any")
+  src_prefix_list_id        = data.alkira_policy_prefix_list.src_prefix_list[each.key].id
+  dst_prefix_list_id        = data.alkira_policy_prefix_list.dst_prefix_list[each.key].id
+  src_ports                 = try(each.value.src_ports, ["any"])
+  dst_ports                 = try(each.value.dst_ports, ["any"])
+  dscp                      = try(each.value.dscp, "any")
+  rule_action_service_types = try(each.value.service_types, null)
 
 }

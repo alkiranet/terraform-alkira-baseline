@@ -19,13 +19,19 @@ output "prefix_list_id" {
   }
 }
 
+output "traffic_rule_id" {
+  description = "Alkira traffic rule ID"
+  value = {
+    for k, v in alkira_policy_rule.rule : k => v.id
+  }
+}
+
 output "segment_id" {
   description = "Alkira segment ID"
   value = {
     for k, v in alkira_segment.segment : k => v.id
   }
 }
-
 
 output "user_group_id" {
   description = "Alkira user group ID"

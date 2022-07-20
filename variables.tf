@@ -17,13 +17,19 @@ variable "create_groups" {
 }
 
 variable "create_tags" {
-  description = "Controls if billing tags are created"
+  description = "Controls if tags are created"
   type        = bool
   default     = false
 }
 
 variable "create_lists" {
   description = "Controls if lists are created"
+  type        = bool
+  default     = false
+}
+
+variable "create_rules" {
+  description = "Controls if rules are created"
   type        = bool
   default     = false
 }

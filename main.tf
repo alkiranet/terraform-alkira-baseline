@@ -58,3 +58,19 @@ resource "alkira_billing_tag" "tag" {
   description = each.value.description
 
 }
+
+# Create prefix lists
+resource "alkira_policy_prefix_list" "list" {
+
+  # Parse prefixes
+  for_each = {
+    for list in local.list_config.lists : list.name => list
+    if var.create_lists == true && list.type == "prefix"
+  }
+
+  # Prefix values
+  name        = each.value.name
+  description = try(each.value.description, "Created by Terraform")
+  prefixes    = each.value.prefixes
+
+}

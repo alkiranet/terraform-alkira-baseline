@@ -1,27 +1,21 @@
 # Alkira Baseline - Terraform Module
-This module makes it easy to provision _shared_ resources in Alkira.
+This module creates various resources in _Alkira_ from **.yml** templates.
 
-## What it does
-Creates _shared_ resources in _Alkira_ from **.yml** templates.
+## Basic Usage
+First, define the path to your **.yml** configuration files. If no path is provided, the module will automatically use **.yml** files found in **./config**. Then, add the required line items with **= true**. Use these [blank templates](https://github.com/alkiranet/terraform-alkira-baseline/tree/main/templates) as a starting point, and don't change the names. Example projects can be found [here](./examples).
 
-### Basic Usage
-Add the required line items with **= true**. Then create the corresponding **.yml** files inside the config folder and populate the desired values. An example project can be found [here.](./examples)
-
-### Flag infrastructure to provision
 ```hcl
 module "baseline" {
   source = "alkiranet/baseline/alkira"
 
-  # Provision billing tags, groups, and segments
-  create_billing_tags    = true
-  create_groups          = true
-  create_segments        = true
+  create_segments  = true
+  create_groups    = true
+  create_tags      = true
+  create_lists     = true
+  create_rules     = true
 
 }
 ```
-
-### Define configuration in .yml files
-The **.yml** template files can be found [here.](./templates) 
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -48,15 +42,22 @@ No modules.
 | [alkira_billing_tag.tag](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/billing_tag) | resource |
 | [alkira_group_connector.group](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/group_connector) | resource |
 | [alkira_group_user.group](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/group_user) | resource |
+| [alkira_policy_prefix_list.list](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/policy_prefix_list) | resource |
+| [alkira_policy_rule.rule](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/policy_rule) | resource |
 | [alkira_segment.segment](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/segment) | resource |
+| [alkira_policy_prefix_list.dst_prefix_list](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/policy_prefix_list) | data source |
+| [alkira_policy_prefix_list.src_prefix_list](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/data-sources/policy_prefix_list) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_create_billing_tags"></a> [create\_billing\_tags](#input\_create\_billing\_tags) | Controls if billing tags are created | `bool` | `false` | no |
+| <a name="input_config_path"></a> [config\_path](#input\_config\_path) | Path to .yml files | `string` | `"./config/"` | no |
 | <a name="input_create_groups"></a> [create\_groups](#input\_create\_groups) | Controls if groups are created | `bool` | `false` | no |
+| <a name="input_create_lists"></a> [create\_lists](#input\_create\_lists) | Controls if lists are created | `bool` | `false` | no |
+| <a name="input_create_rules"></a> [create\_rules](#input\_create\_rules) | Controls if rules are created | `bool` | `false` | no |
 | <a name="input_create_segments"></a> [create\_segments](#input\_create\_segments) | Controls if segments are created | `bool` | `false` | no |
+| <a name="input_create_tags"></a> [create\_tags](#input\_create\_tags) | Controls if tags are created | `bool` | `false` | no |
 
 ## Outputs
 
@@ -64,5 +65,8 @@ No modules.
 |------|-------------|
 | <a name="output_billing_tag_id"></a> [billing\_tag\_id](#output\_billing\_tag\_id) | Alkira billing tag ID |
 | <a name="output_connector_group_id"></a> [connector\_group\_id](#output\_connector\_group\_id) | Alkira connector group ID |
+| <a name="output_prefix_list_id"></a> [prefix\_list\_id](#output\_prefix\_list\_id) | Alkira prefix-list ID |
 | <a name="output_segment_id"></a> [segment\_id](#output\_segment\_id) | Alkira segment ID |
+| <a name="output_traffic_rule_id"></a> [traffic\_rule\_id](#output\_traffic\_rule\_id) | Alkira traffic rule ID |
+| <a name="output_user_group_id"></a> [user\_group\_id](#output\_user\_group\_id) | Alkira user group ID |
 <!-- END_TF_DOCS -->

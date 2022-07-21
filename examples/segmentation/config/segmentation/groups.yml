@@ -1,11 +1,15 @@
 ---
 groups:
   - name: 'nonprod'
-    description: 'Non-Production environments'
+    description: 'Non-Production Environments'
     type: 'connector'
 
   - name: 'prod'
-    description: 'Production environments'
+    description: 'Production Environments'
+    type: 'connector'
+
+  - name: 'www'
+    description: 'Internet Egress'
     type: 'connector'
 
   - name: 'remote'

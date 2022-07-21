@@ -1,0 +1,32 @@
+---
+lists:
+  - name: 'any'
+    type: 'prefix'
+    description: 'Any Traffic'
+    prefixes:
+      - '0.0.0.0/0'
+
+  - name: 'cloud-dev'
+    type: 'prefix'
+    description: 'Cloud Prefixes'
+    prefixes:
+      - '10.5.0.0/20'
+      - '10.5.16.0/20'
+      - '10.5.32.0/20'
+
+  - name: 'cloud-qa'
+    type: 'prefix'
+    description: 'Cloud Prefixes'
+    prefixes:
+      - '10.10.0.0/20'
+      - '10.10.16.0/20'
+      - '10.10.32.0/20'
+
+  - name: 'cloud-prod'
+    type: 'prefix'
+    description: 'Cloud Prefixes'
+    prefixes:
+      - '10.15.0.0/20'
+      - '10.15.16.0/20'
+      - '10.15.32.0/20'
+...

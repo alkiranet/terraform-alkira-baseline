@@ -1,0 +1,45 @@
+---
+rules:
+  - name: 'deny-all'
+    description: 'Default deny-all'
+    type: 'traffic'
+    rule_action: 'DROP'
+    src_prefix_list: 'any'
+    dst_prefix_list: 'any'
+    src_ports:
+      - 'any'
+    dst_ports:
+      - 'any'
+
+  - name: 'prod-to-service'
+    description: 'Route Prod traffic through Firewall'
+    type: 'traffic'
+    rule_action: 'ALLOW'
+    src_prefix_list: 'cloud-prod'
+    dst_prefix_list: 'any'
+    src_ports:
+      - 'any'
+    dst_ports:
+      - 'any'
+    service_types:
+      - 'PAN'
+
+  - name: 'dev-to-qa'
+    type: 'traffic'
+    rule_action: 'ALLOW'
+    dscp: 'any'
+    protocol: 'tcp'
+    description: 'Allow traffic from Dev to QA'
+    src_prefix_list: 'cloud-dev'
+    dst_prefix_list: 'cloud-qa'
+    src_ports:
+      - '22'
+      - '80'
+      - '443'
+      - '8443'
+    dst_ports:
+      - '22'
+      - '80'
+      - '443'
+      - '8443'
+...

@@ -1,5 +1,5 @@
 # Alkira Baseline - Terraform Module
-This module creates _shared_ resources in _Alkira_ from **.yml** templates.
+This module creates various resources in _Alkira_ from **.yml** templates.
 
 ## Basic Usage
 First, define the path to your **.yml** configuration files. Then, add the required line items with **= true**. Use these [blank templates](https://github.com/alkiranet/terraform-alkira-baseline/templates) as a starting point, and don't change the names. Example projects can be found [here](./examples).
@@ -8,9 +8,11 @@ First, define the path to your **.yml** configuration files. Then, add the requi
 module "baseline" {
   source = "alkiranet/baseline/alkira"
 
-  create_billing_tags    = true
-  create_groups          = true
-  create_segments        = true
+  create_segments  = true
+  create_groups    = true
+  create_tags      = true
+  create_lists     = true
+  create_rules     = true
 
 }
 ```

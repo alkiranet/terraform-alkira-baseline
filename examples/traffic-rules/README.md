@@ -1,7 +1,7 @@
 ## Traffic Rules
 This example will build the constructs required for _traffic rules_ in Alkira.
 
-- [Prefix List Objects](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/policy_prefix_list) group prefixes that can then be used in _traffic rules_
+- [Prefix Lists](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/policy_prefix_list) group prefixes that can then be used in _traffic rules_
 
 - [Traffic Rules](https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/policy_rule) are built using the standard stateless **5-tuple** specifications
 

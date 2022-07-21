@@ -2,7 +2,7 @@
 This module creates various resources in _Alkira_ from **.yml** templates.
 
 ## Basic Usage
-First, define the path to your **.yml** configuration files. Then, add the required line items with **= true**. Use these [blank templates](https://github.com/alkiranet/terraform-alkira-baseline/templates) as a starting point, and don't change the names. Example projects can be found [here](./examples).
+First, define the path to your **.yml** configuration files. If no path is provided, the module will automatically use **.yml** files found in _./config_. Then, add the required line items with **= true**. Use these [blank templates](https://github.com/alkiranet/terraform-alkira-baseline/templates) as a starting point, and don't change the names. Example projects can be found [here](./examples).
 
 ```hcl
 module "baseline" {

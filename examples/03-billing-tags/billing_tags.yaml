@@ -1,0 +1,14 @@
+---
+billing_tag:
+  - name: 'product-a'
+    description: 'Product A network charge-back'
+
+  - name: 'product-b'
+    description: 'Product B network charge-back'
+
+  - name: 'shared-services'
+    description: 'Shared services network charge-back'
+
+  - name: 'sandbox'
+    description: 'Sandbox network charge-back'
+...

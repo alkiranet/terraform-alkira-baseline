@@ -1,0 +1,29 @@
+---
+segment:
+
+  # Basic configuration with defaults
+  - name: 'corporate'
+    cidrs:
+      - '10.100.1.0/24'
+
+  # Adding more values
+  - name: 'sandbox'
+    description: 'Isolated segment'
+    cidrs:
+      - '10.100.10.0/24'
+      - '10.100.11.0/24'
+    asn: '65514'
+
+  # Adding more values
+  - name: 'partner'
+    description: 'Landing zone for partner networks'
+    cidrs:
+      - '10.100.20.0/24'
+      - '10.100.21.0/24'
+      - '10.100.22.0/24'
+    asn: '65513'
+    reserve_public_ips: true
+    service_traffic_distribution: false
+    enable_ipv6_to_ipv4_translation: false
+    enterprise_dns_server: '10.1.1.254'
+...

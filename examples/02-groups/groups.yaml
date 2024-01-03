@@ -1,0 +1,14 @@
+---
+group:
+  - name: 'nonprod'
+    description: 'Non-Production workloads'
+
+  - name: 'prod'
+    description: 'Production workloads'
+
+  - name: 'www'
+    description: 'Internet egress'
+
+  - name: 'wan'
+    description: 'Wide Area Networking'
+...

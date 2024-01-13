@@ -1,3 +1,13 @@
+output "connector_cisco_sdwan_id" {
+  description = "ID of Cisco SDWAN connector"
+  value = try(module.connector_cisco_sdwan.*.connector_cisco_sdwan_id, "")
+}
+
+output "connector_cisco_sdwan_implicit_group_id" {
+  description = "Implicit group ID of Cisco SDWAN connector"
+  value = try(module.connector_cisco_sdwan.*.connector_cisco_sdwan_implicit_group_id, "")
+}
+
 output "connector_internet_id" {
   description = "ID of internet exit connector"
   value = try(module.connector_internet.*.connector_internet_id, "")

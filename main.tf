@@ -12,6 +12,22 @@ module "billing_tag" {
 
 }
 
+module "connector_cisco_sdwan" {
+  source = "./modules/connector_cisco_sdwan"
+
+  # do keys exist?
+  count = local.connector_cisco_sdwan ? 1 : 0
+
+  # set bool
+  cisco_sdwan       = local.connector_cisco_sdwan ? true : false
+
+  # pass data
+  cisco_sdwan_data  = local.config["connector_cisco_sdwan"]
+
+  depends_on        = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "connector_internet" {
   source = "./modules/connector_internet"
 

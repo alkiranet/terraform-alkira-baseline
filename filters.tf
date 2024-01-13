@@ -6,6 +6,7 @@ locals {
   config                   = yamldecode(local.config_file_content)
 
   # connector resource keys
+  connector_cisco_sdwan    = contains(keys(local.config), "connector_cisco_sdwan")
   connector_internet       = contains(keys(local.config), "connector_internet")
 
   # base resource keys

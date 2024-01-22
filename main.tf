@@ -100,6 +100,22 @@ module "segment" {
 
 }
 
+module "service_pan" {
+  source = "./modules/service-pan"
+
+  # do keys exist?
+  count = local.service_pan ? 1 : 0
+
+  # set bool
+  service_pan       = local.service_pan ? true : false
+
+  # pass data
+  pan_service_data  = local.config["service_pan"]
+
+  depends_on        = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "traffic_policy" {
   source = "./modules/alkira_traffic_policy"
 

@@ -43,6 +43,11 @@ output "segment_id" {
   value = try(module.segment.*.segment_id, "")
 }
 
+output "service_pan_id" {
+  description = "ID of PAN service"
+  value = try(module.service_pan.*.service_pan_id, "")
+}
+
 output "traffic_policy_id" {
   description = "ID of traffic policy"
   value = try(module.traffic_policy.*.traffic_policy_id, "")

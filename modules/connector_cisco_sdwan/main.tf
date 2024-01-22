@@ -43,7 +43,7 @@ https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/c
 locals {
   filter_connectors = flatten([
     for c in var.cisco_sdwan_data : {
-        cxp                    = c.cxp
+        cxp                    = upper(c.cxp)
         instance               = c.instance
         name                   = c.name
         billing_tags           = [for billing_tag in c.billing_tags : lookup(data.alkira_billing_tag.billing_tag, billing_tag, null).id]

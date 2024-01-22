@@ -9,6 +9,9 @@ locals {
   connector_cisco_sdwan    = contains(keys(local.config), "connector_cisco_sdwan")
   connector_internet       = contains(keys(local.config), "connector_internet")
 
+  # service resource keys
+  service_pan              = contains(keys(local.config), "service_pan")
+
   # base resource keys
   billing_tag              = contains(keys(local.config), "billing_tag")
   group                    = contains(keys(local.config), "group")

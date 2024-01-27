@@ -100,6 +100,22 @@ module "segment" {
 
 }
 
+module "service_fortinet" {
+  source = "./modules/service-fortinet"
+
+  # do keys exist?
+  count = local.service_fortinet ? 1 : 0
+
+  # set bool
+  service_fortinet       = local.service_fortinet ? true : false
+
+  # pass data
+  fortinet_service_data  = local.config["service_fortinet"]
+
+  depends_on             = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "service_pan" {
   source = "./modules/service-pan"
 

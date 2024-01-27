@@ -10,6 +10,7 @@ locals {
   connector_internet       = contains(keys(local.config), "connector_internet")
 
   # service resource keys
+  service_fortinet         = contains(keys(local.config), "service_fortinet")
   service_pan              = contains(keys(local.config), "service_pan")
 
   # base resource keys

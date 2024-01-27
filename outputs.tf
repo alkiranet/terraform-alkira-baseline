@@ -43,6 +43,11 @@ output "segment_id" {
   value = try(module.segment.*.segment_id, "")
 }
 
+output "service_fortinet_id" {
+  description = "ID of Fortinet service"
+  value = try(module.service_fortinet.*.service_fortinet_id, "")
+}
+
 output "service_pan_id" {
   description = "ID of PAN service"
   value = try(module.service_pan.*.service_pan_id, "")

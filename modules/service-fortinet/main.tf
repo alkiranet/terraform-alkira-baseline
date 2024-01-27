@@ -72,7 +72,7 @@ https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/s
 locals {
   filter_connectors = flatten([
     for c in var.fortinet_service_data : {
-        auto_scale               = upper(c.auto_scale)
+        auto_scale               = "OFF"
         billing_tags             = [for billing_tag in c.billing_tags : lookup(data.alkira_billing_tag.billing_tag, billing_tag, null).id]
         cxp                      = upper(c.cxp)
         license_type             = c.license_type

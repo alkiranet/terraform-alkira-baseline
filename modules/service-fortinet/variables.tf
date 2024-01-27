@@ -7,7 +7,6 @@ variable "service_fortinet" {
 variable "fortinet_service_data" {
   type = list(object({
 
-    auto_scale              = optional(string, "off")
     billing_tags            = optional(list(string), [])
     cxp                     = string
     license_type            = optional(string, "PAY_AS_YOU_GO")

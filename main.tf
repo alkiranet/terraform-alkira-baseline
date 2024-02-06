@@ -1,5 +1,5 @@
 module "billing_tag" {
-  source = "./modules/alkira_base"
+  source = "./modules/base-network"
 
   # do keys exist?
   count = local.billing_tag ? 1 : 0
@@ -13,7 +13,7 @@ module "billing_tag" {
 }
 
 module "connector_cisco_sdwan" {
-  source = "./modules/connector_cisco_sdwan"
+  source = "./modules/connector-cisco-sdwan"
 
   # do keys exist?
   count = local.connector_cisco_sdwan ? 1 : 0
@@ -29,7 +29,7 @@ module "connector_cisco_sdwan" {
 }
 
 module "connector_internet" {
-  source = "./modules/connector_internet"
+  source = "./modules/connector-internet-exit"
 
   # do keys exist?
   count = local.connector_internet ? 1 : 0
@@ -45,7 +45,7 @@ module "connector_internet" {
 }
 
 module "group" {
-  source = "./modules/alkira_base"
+  source = "./modules/base-network"
 
   # do keys exist?
   count = local.group ? 1 : 0
@@ -59,7 +59,7 @@ module "group" {
 }
 
 module "prefix_list" {
-  source = "./modules/alkira_base"
+  source = "./modules/base-network"
 
   # do keys exist?
   count = local.prefix_list ? 1 : 0
@@ -73,7 +73,7 @@ module "prefix_list" {
 }
 
 module "global_cidr_list" {
-  source = "./modules/alkira_base"
+  source = "./modules/base-network"
 
   # do keys exist?
   count = local.global_cidr_list ? 1 : 0
@@ -87,7 +87,7 @@ module "global_cidr_list" {
 }
 
 module "segment" {
-  source = "./modules/alkira_base"
+  source = "./modules/base-network"
 
   # do keys exist?
   count = local.segment ? 1 : 0
@@ -133,7 +133,7 @@ module "service_pan" {
 }
 
 module "traffic_policy" {
-  source = "./modules/alkira_traffic_policy"
+  source = "./modules/traffic-policy"
 
   # do keys exist?
   count = local.traffic_policy ? 1 : 0
@@ -149,7 +149,7 @@ module "traffic_policy" {
 }
 
 module "traffic_rule" {
-  source = "./modules/alkira_traffic_policy"
+  source = "./modules/traffic-policy"
 
   # do keys exist?
   count = local.traffic_rule ? 1 : 0
@@ -165,7 +165,7 @@ module "traffic_rule" {
 }
 
 module "traffic_rule_list" {
-  source = "./modules/alkira_traffic_policy"
+  source = "./modules/traffic-policy"
 
   # do keys exist?
   count = local.traffic_rule_list ? 1 : 0

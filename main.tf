@@ -44,6 +44,22 @@ module "connector_internet" {
 
 }
 
+module "connector_vmware_sdwan" {
+  source = "./modules/connector-vmware-sdwan"
+
+  # do keys exist?
+  count = local.connector_vmware_sdwan ? 1 : 0
+
+  # set bool
+  vmware_sdwan       = local.connector_vmware_sdwan ? true : false
+
+  # pass data
+  vmware_sdwan_data  = local.config["connector_vmware_sdwan"]
+
+  depends_on         = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "group" {
   source = "./modules/base-network"
 

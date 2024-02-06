@@ -13,6 +13,16 @@ output "connector_internet_id" {
   value = try(module.connector_internet.*.connector_internet_id, "")
 }
 
+output "connector_vmware_sdwan_id" {
+  description = "ID of VMware SDWAN connector"
+  value = try(module.connector_vmware_sdwan.*.connector_vmware_sdwan_id, "")
+}
+
+output "connector_vmware_sdwan_implicit_group_id" {
+  description = "Implicit group ID of VMware SDWAN connector"
+  value = try(module.connector_vmware_sdwan.*.connector_vmware_sdwan_implicit_group_id, "")
+}
+
 output "connector_internet_implicit_group_id" {
   description = "Implicit group ID of internet exit connector"
   value = try(module.connector_internet.*.connector_internet_implicit_group_id, "")

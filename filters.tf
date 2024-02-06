@@ -8,6 +8,7 @@ locals {
   # connector resource keys
   connector_cisco_sdwan    = contains(keys(local.config), "connector_cisco_sdwan")
   connector_internet       = contains(keys(local.config), "connector_internet")
+  connector_vmware_sdwan   = contains(keys(local.config), "connector_vmware_sdwan")
 
   # service resource keys
   service_fortinet         = contains(keys(local.config), "service_fortinet")

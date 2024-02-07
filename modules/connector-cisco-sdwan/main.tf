@@ -3,8 +3,8 @@ locals {
   # filter 'segment' data
   filter_segments = flatten([
     for connector in var.cisco_sdwan_data : [
-      for vrf_segment in connector.vrf_segment_mapping :
-        vrf_segment.segment
+      for segment in connector.segment_mapping :
+        segment.segment
     ]
   ])
 
@@ -54,10 +54,10 @@ locals {
         version                = c.version
 
         # build new obj with original values and replace segment name -> id
-        vrf_segment_mapping    = [for vrf_segment in c.vrf_segment_mapping : {
-          customer_asn = vrf_segment.customer_asn
-          vrf_id       = vrf_segment.vrf_id
-          segment_id   = lookup(data.alkira_segment.segment, vrf_segment.segment, null).id
+        segment_mapping    = [for segment in c.segment_mapping : {
+          customer_asn = segment.customer_asn
+          vrf_id       = segment.vrf_id
+          segment_id   = lookup(data.alkira_segment.segment, segment.segment, null).id
       }]
       }
   ])
@@ -89,7 +89,7 @@ resource "alkira_connector_cisco_sdwan" "connector" {
   }
 
   dynamic "vrf_segment_mapping" {
-    for_each = each.value.vrf_segment_mapping
+    for_each = each.value.segment_mapping
     content {
       customer_asn  = vrf_segment_mapping.value.customer_asn
       segment_id    = vrf_segment_mapping.value.segment_id

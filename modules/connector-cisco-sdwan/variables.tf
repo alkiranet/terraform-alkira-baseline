@@ -23,7 +23,7 @@ variable "cisco_sdwan_data" {
       password         = optional(string, "netadmin")
     })))
 
-    vrf_segment_mapping = optional(list(object({
+    segment_mapping = optional(list(object({
       advertise_default_route   = optional(bool, false)
       advertise_on_prem_routes  = optional(bool, false)
       customer_asn              = string

@@ -1,3 +1,13 @@
+output "alkira_connector_azure_id" {
+  description  = "ID of Azure connector"
+  value        = try(module.connector_azure_vnet.*.alkira_connector_azure_id, "")
+}
+
+output "alkira_connector_azure_implicit_group_id" {
+  description  = "Implicit group ID of Azure connector"
+  value        = try(module.connector_azure_vnet.*.alkira_connector_azure_implicit_group_id, "")
+}
+
 output "connector_cisco_sdwan_id" {
   description = "ID of Cisco SDWAN connector"
   value = try(module.connector_cisco_sdwan.*.connector_cisco_sdwan_id, "")

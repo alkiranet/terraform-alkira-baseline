@@ -12,6 +12,22 @@ module "billing_tag" {
 
 }
 
+module "connector_azure_vnet" {
+  source = "./modules/connector-azure-vnet"
+
+  # do keys exist?
+  count = local.connector_azure_vnet ? 1 : 0
+
+  # set bool
+  azure_vnet        = local.connector_azure_vnet ? true : false
+
+  # pass data
+  azure_vnet_data  = local.config["connector_azure_vnet"]
+
+  depends_on        = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "connector_cisco_sdwan" {
   source = "./modules/connector-cisco-sdwan"
 

@@ -12,6 +12,22 @@ module "billing_tag" {
 
 }
 
+module "connector_aws_vpc" {
+  source = "./modules/connector-aws-vpc"
+
+  # do keys exist?
+  count = local.connector_aws_vpc ? 1 : 0
+
+  # set bool
+  aws_vpc        = local.connector_aws_vpc ? true : false
+
+  # pass data
+  aws_vpc_data   = local.config["connector_aws_vpc"]
+
+  depends_on     = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "connector_azure_vnet" {
   source = "./modules/connector-azure-vnet"
 

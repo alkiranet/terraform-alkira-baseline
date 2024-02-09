@@ -1,3 +1,13 @@
+output "alkira_connector_aws_id" {
+  description = "ID of AWS connector"
+  value = try(module.connector_aws_vpc.*.alkira_connector_aws_id, "")
+}
+
+output "alkira_connector_aws_implicit_group_id" {
+  description = "Implicit group ID of AWS connector"
+  value = try(module.connector_aws_vpc.*.alkira_connector_aws_implicit_group_id, "")
+}
+
 output "alkira_connector_azure_id" {
   description  = "ID of Azure connector"
   value        = try(module.connector_azure_vnet.*.alkira_connector_azure_id, "")

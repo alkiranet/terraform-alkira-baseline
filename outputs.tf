@@ -28,6 +28,16 @@ output "connector_cisco_sdwan_implicit_group_id" {
   value = try(module.connector_cisco_sdwan.*.connector_cisco_sdwan_implicit_group_id, "")
 }
 
+output "alkira_connector_gcp_id" {
+  description  = "ID of GCP connector"
+  value        = try(module.connector_gcp_vpc.*.alkira_connector_gcp_id, "")
+}
+
+output "alkira_connector_gcp_implicit_group_id" {
+  description  = "Implicit group ID of GCP connector"
+  value        = try(module.connector_gcp_vpc.*.alkira_connector_gcp_implicit_group_id, "")
+}
+
 output "connector_internet_id" {
   description = "ID of internet exit connector"
   value = try(module.connector_internet.*.connector_internet_id, "")

@@ -60,6 +60,22 @@ module "connector_cisco_sdwan" {
 
 }
 
+module "connector_gcp_vpc" {
+  source = "./modules/connector-gcp-vpc"
+
+  # do keys exist?
+  count = local.connector_gcp_vpc ? 1 : 0
+
+  # set bool
+  gcp_vpc        = local.connector_gcp_vpc ? true : false
+
+  # pass data
+  gcp_vpc_data   = local.config["connector_gcp_vpc"]
+
+  depends_on     = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "connector_internet" {
   source = "./modules/connector-internet-exit"
 

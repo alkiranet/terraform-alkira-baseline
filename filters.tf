@@ -9,6 +9,7 @@ locals {
   connector_aws_vpc        = contains(keys(local.config), "connector_aws_vpc")
   connector_azure_vnet     = contains(keys(local.config), "connector_azure_vnet")
   connector_cisco_sdwan    = contains(keys(local.config), "connector_cisco_sdwan")
+  connector_gcp_vpc        = contains(keys(local.config), "connector_gcp_vpc")
   connector_internet       = contains(keys(local.config), "connector_internet")
   connector_vmware_sdwan   = contains(keys(local.config), "connector_vmware_sdwan")
 

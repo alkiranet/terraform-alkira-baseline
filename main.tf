@@ -92,6 +92,22 @@ module "connector_internet" {
 
 }
 
+module "connector_oci_vcn" {
+  source = "./modules/connector-oci-vcn"
+
+  # do keys exist?
+  count = local.connector_oci_vcn ? 1 : 0
+
+  # set bool
+  oci_vcn        = local.connector_oci_vcn ? true : false
+
+  # pass data
+  oci_vcn_data   = local.config["connector_oci_vcn"]
+
+  depends_on     = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "connector_vmware_sdwan" {
   source = "./modules/connector-vmware-sdwan"
 

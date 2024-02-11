@@ -43,6 +43,16 @@ output "connector_internet_id" {
   value = try(module.connector_internet.*.connector_internet_id, "")
 }
 
+output "connector_oci_id" {
+  description = "ID of OCI connector"
+  value = try(module.connector_oci_vcn.*.connector_oci_id, "")
+}
+
+output "connector_oci_implicit_group_id" {
+  description = "Implicit group ID of OCI connector"
+  value = try(module.connector_oci_vcn.*.connector_oci_implicit_group_id, "")
+}
+
 output "connector_vmware_sdwan_id" {
   description = "ID of VMware SDWAN connector"
   value = try(module.connector_vmware_sdwan.*.connector_vmware_sdwan_id, "")

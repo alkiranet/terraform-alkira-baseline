@@ -93,6 +93,10 @@ locals {
       from_cisco_sdwan_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id != null] : [],
       to_cisco_sdwan_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id != null] : [],
 
+      # get aruba edge implicit ids
+      from_aruba_edge_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id != null] : [],
+      to_aruba_edge_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id != null] : [],
+
       # get standard group ids
       from_groups          = length(policy.from_groups) > 0 ? [for group in policy.from_groups : lookup(data.alkira_group.from, group, null).id if lookup(data.alkira_group.from, group, null).id != null] : [],
       to_groups            = length(policy.to_groups) > 0 ? [for group in policy.to_groups : lookup(data.alkira_group.to, group, null).id if lookup(data.alkira_group.to, group, null).id != null] : [],
@@ -104,6 +108,7 @@ locals {
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id != null] : [],
+        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_groups) > 0 ? [for group in policy.from_groups : lookup(data.alkira_group.from, group, null).id if lookup(data.alkira_group.from, group, null).id != null] : []
       )),
       to_group_list        = distinct(concat(
@@ -112,6 +117,7 @@ locals {
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id != null] : [],
+        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_groups) > 0 ? [for group in policy.to_groups : lookup(data.alkira_group.to, group, null).id if lookup(data.alkira_group.to, group, null).id != null] : []
       ))
     }

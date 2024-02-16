@@ -1,0 +1,62 @@
+---
+# Connect two AWS VPCs
+connector_aws_vpc:
+  - name: 'vpc-app-a-nonprod'
+    aws_account_id: '012345678'
+    billing_tag: 'app-a-nonprod'
+    region: 'us-east-2'
+    credential: 'aws'
+    cxp: 'us-east-2'
+    group: 'nonprod'
+    segment: 'corporate'
+    network_cidr: '10.5.0.0/16'
+    network_id: 'vpc-012345678'
+    route_table_id: 'rtb-012345678'
+
+  - name: 'vpc-app-a-prod'
+    aws_account_id: '012345678'
+    billing_tag: 'app-a-prod'
+    region: 'us-east-2'
+    credential: 'aws'
+    cxp: 'us-east-2'
+    group: 'prod'
+    segment: 'corporate'
+    network_cidr: '10.6.0.0/16'
+    network_id: 'vpc-876543210'
+    route_table_id: 'rtb-876543210'
+
+# Connect Azure VNet
+connector_azure_vnet:
+  - name: 'vnet-east-landing-zone'
+    credential: 'azure'
+    resource_group: 'resource-group'
+    region: 'eastus'
+    cxp: 'us-east-2'
+    group: 'prod'
+    segment: 'corporate'
+    network_cidr: '10.10.0.0/16'
+    network_id: '/subscriptions/012345678/resourcegroups/resource-group/providers/Microsoft.Network/virtualNetworks/vnet-east-landing-zone'
+
+# Connect GCP VPC
+connector_gcp_vpc:
+  - name: 'cn-gcp-applications'
+    project: 'my-project'
+    credential: 'gcp'
+    region: 'us-east4'
+    cxp: 'us-east-2'
+    group: 'prod'
+    segment: 'corporate'
+    vpc_name: 'gcp-applications'
+
+# Connect OCI VCN
+connector_oci_vcn:
+  - name: 'oci-vcn-a'
+    compartment_id: 'ocid1.tenancy.012345678'
+    region: 'us-ashburn-1'
+    credential: 'oci'
+    cxp: 'us-east-2'
+    group: 'prod'
+    segment: 'corporate'
+    network_cidr: '10.20.0.0/16'
+    network_id: 'ocid1.vcn.876543210'
+...

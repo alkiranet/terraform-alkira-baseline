@@ -49,7 +49,7 @@ locals {
         compartment_id    = c.compartment_id
         region            = c.region
         credential        = lookup(data.alkira_credential.credential, c.credential, null).id
-        cxp               = c.cxp
+        cxp               = upper(c.cxp)
         group             = c.group
         name              = c.name
         segment           = lookup(data.alkira_segment.segment, c.segment, null).id

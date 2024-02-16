@@ -42,7 +42,7 @@ locals {
     for c in var.connector_internet_data : {
 
         # required
-        cxp                                       = c.cxp
+        cxp                                       = upper(c.cxp)
         name                                      = c.name
         segment                                   = lookup(data.alkira_segment.segment, c.segment, null).id
         

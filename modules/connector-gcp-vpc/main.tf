@@ -46,7 +46,7 @@ locals {
 
         billing_tag       = c.billing_tag != null ? data.alkira_billing_tag.billing_tag[c.billing_tag].id : null
         credential        = lookup(data.alkira_credential.credential, c.credential, null).id
-        cxp               = c.cxp
+        cxp               = upper(c.cxp)
         region            = c.region
         vpc_name          = c.vpc_name
         group             = c.group

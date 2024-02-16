@@ -34,7 +34,7 @@ locals {
     for c in var.azure_vnet_data : {
 
         credential        = lookup(data.alkira_credential.credential, c.credential, null).id
-        cxp               = c.cxp
+        cxp               = upper(c.cxp)
         group             = c.group
         name              = c.name
         network_cidr      = c.network_cidr

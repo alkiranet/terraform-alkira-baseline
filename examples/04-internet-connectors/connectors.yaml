@@ -1,12 +1,12 @@
 ---
 connector_internet:
   - name: 'east-www'
-    cxp: 'US-EAST-2'
+    cxp: 'us-east-2'
     group: 'www'
     segment: 'business'
 
   - name: 'west-www'
-    cxp: 'US-WEST-1'
+    cxp: 'us-west-1'
     group: 'www'
     segment: 'business'
     public_ip_number: 8

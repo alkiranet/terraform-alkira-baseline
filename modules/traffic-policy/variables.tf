@@ -43,13 +43,15 @@ variable "traffic_policy" {
 
 variable "traffic_policy_data" {
   type = list(object({
-    name         = string
-    description  = optional(string, "Created by Terraform")
-    enabled      = optional(string, "true")
-    rule_list    = string
-    segment      = string
-    from_groups  = list(string)
-    to_groups    = list(string)
+    name             = string
+    description      = optional(string, "Created by Terraform")
+    enabled          = optional(string, "true")
+    rule_list        = string
+    segment          = string
+    from_connectors  = optional(list(string), [])
+    to_connectors    = optional(list(string), [])
+    from_groups      = optional(list(string), [])
+    to_groups        = optional(list(string), [])
   }))
   default = []
 }

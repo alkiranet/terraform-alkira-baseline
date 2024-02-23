@@ -32,6 +32,12 @@ data "alkira_billing_tag" "billing_tag" {
 
 }
 
+resource "random_string" "psk" {
+  count    = 2
+  length   = 32
+  special  = true
+}
+
 /*
 alkira_connector_ipsec
 https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/connector_ipsec
@@ -55,7 +61,10 @@ locals {
           customer_gateway_ip       = endpoint.customer_gateway_ip
           enable_tunnel_redundancy  = endpoint.enable_tunnel_redundancy
           name                      = endpoint.name
-          preshared_keys            = endpoint.preshared_keys
+          preshared_keys            = length(endpoint.preshared_keys) > 0 ? endpoint.preshared_keys : [
+            random_string.psk[0].result,
+            random_string.psk[1].result,
+        ]
       }]
 
       # filter routing options

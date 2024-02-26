@@ -52,7 +52,7 @@ locals {
         enabled        = c.enabled
         group          = c.group
         name           = c.name
-        segment        = lookup(data.alkira_segment.segment, c.segment, null).id
+        segment_id     = lookup(data.alkira_segment.segment, c.segment, null).id
         size           = c.size
         
         # filter endpoints
@@ -75,6 +75,18 @@ locals {
         type                  = c.routing_options["type"]
       }
 
+      # filter segment options
+      segment_options = {
+        advertise_default_route   = try(c.segment_options.advertise_default_route, false),
+        advertise_on_prem_routes  = try(c.segment_options.advertise_on_prem_routes, false),
+        segment_name              = try(lookup(data.alkira_segment.segment, c.segment, null).name, "")
+      }
+      # segment_options = {
+      #   advertise_default_route   = c.segment_options["advertise_default_route"]
+      #   advertise_on_prem_routes  = c.segment_options["advertise_on_prem_routes"]
+      #   segment_name              = lookup(data.alkira_segment.segment, c.segment, null).name
+      # }
+
     }
   ])
 }
@@ -90,7 +102,7 @@ resource "alkira_connector_ipsec" "connector" {
   enabled     = each.value.enabled
   group       = each.value.group
   name        = each.value.name
-  segment_id  = each.value.segment
+  segment_id  = each.value.segment_id
   size        = each.value.size
   vpn_mode    = "ROUTE_BASED"
 
@@ -110,6 +122,12 @@ resource "alkira_connector_ipsec" "connector" {
     bgp_auth_key          = each.value.routing_options.bgp_auth_key
     customer_gateway_asn  = each.value.routing_options.customer_gateway_asn
     type                  = each.value.routing_options.type
+  }
+
+  segment_options {
+    advertise_default_route   = each.value.segment_options.advertise_default_route
+    advertise_on_prem_routes  = each.value.segment_options.advertise_on_prem_routes
+    name                      = each.value.segment_options.segment_name
   }
 
 }

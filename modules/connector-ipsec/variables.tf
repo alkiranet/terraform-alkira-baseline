@@ -33,6 +33,12 @@ variable "connector_ipsec_data" {
       type                  = optional(string, "DYNAMIC")
     }))
 
+    # segment option vars
+    segment_options  = optional(object({
+      advertise_default_route   = optional(string, false)
+      advertise_on_prem_routes  = optional(string, false)
+    }))
+
   }))
   default = []
 }

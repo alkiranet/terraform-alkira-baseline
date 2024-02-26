@@ -92,6 +92,22 @@ module "connector_internet" {
 
 }
 
+module "connector_ipsec" {
+  source = "./modules/connector-ipsec"
+
+  # do keys exist?
+  count = local.connector_ipsec ? 1 : 0
+
+  # set bool
+  connector_ipsec       = local.connector_ipsec ? true : false
+
+  # pass data
+  connector_ipsec_data  = local.config["connector_ipsec"]
+
+  depends_on            = [module.billing_tag, module.group, module.segment]
+
+}
+
 module "connector_oci_vcn" {
   source = "./modules/connector-oci-vcn"
 

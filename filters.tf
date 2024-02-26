@@ -11,6 +11,7 @@ locals {
   connector_cisco_sdwan    = contains(keys(local.config), "connector_cisco_sdwan")
   connector_gcp_vpc        = contains(keys(local.config), "connector_gcp_vpc")
   connector_internet       = contains(keys(local.config), "connector_internet")
+  connector_ipsec          = contains(keys(local.config), "connector_ipsec")
   connector_oci_vcn        = contains(keys(local.config), "connector_oci_vcn")
   connector_vmware_sdwan   = contains(keys(local.config), "connector_vmware_sdwan")
 

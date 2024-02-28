@@ -154,6 +154,30 @@ module "group" {
 
 }
 
+module "internet_application" {
+  source = "./modules/internet-application"
+
+  # do keys exist?
+  count = local.internet_application ? 1 : 0
+
+  # set bool
+  internet_application       = local.internet_application ? true : false
+
+  # pass data
+  internet_application_data  = local.config["internet_application"]
+
+  depends_on = [
+    module.billing_tag,
+    module.group,
+    module.segment,
+    module.connector_aws_vpc,
+    module.connector_azure_vnet,
+    module.connector_gcp_vpc,
+    module.connector_oci_vcn
+  ]
+
+}
+
 module "prefix_list" {
   source = "./modules/base-network"
 

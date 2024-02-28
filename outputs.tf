@@ -93,6 +93,16 @@ output "global_cidr_list_id" {
   value = try(module.global_cidr_list.*.global_cidr_list_id, "")
 }
 
+output "internet_application_group_id" {
+  description = "Group ID of Internet Application"
+  value = try(module.internet_application.*.internet_application_group_id, "")
+}
+
+output "internet_application_id" {
+  description = "ID of Internet Application"
+  value = try(module.internet_application.*.internet_application_id, "")
+}
+
 output "prefix_list_id" {
   description = "ID of prefix list"
   value = try(module.prefix_list.*.prefix_list_id, "")

@@ -81,11 +81,6 @@ locals {
         advertise_on_prem_routes  = try(c.segment_options.advertise_on_prem_routes, false),
         segment_name              = try(lookup(data.alkira_segment.segment, c.segment, null).name, "")
       }
-      # segment_options = {
-      #   advertise_default_route   = c.segment_options["advertise_default_route"]
-      #   advertise_on_prem_routes  = c.segment_options["advertise_on_prem_routes"]
-      #   segment_name              = lookup(data.alkira_segment.segment, c.segment, null).name
-      # }
 
     }
   ])

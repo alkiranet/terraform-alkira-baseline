@@ -8,13 +8,13 @@ variable "connector_ipsec_data" {
   type = list(object({
 
     # base vars
-    cxp         = string
+    cxp                  = string
     customer_gateway_asn = string
-    enabled     = optional(string, true)
-    group       = optional(string)
-    name        = string
-    segment     = string
-    size        = optional(string, "SMALL")
+    enabled              = optional(string, true)
+    group                = optional(string)
+    name                 = string
+    segment              = string
+    size                 = optional(string, "SMALL")
 
     # endpoint vars
     endpoints  = optional(list(object({

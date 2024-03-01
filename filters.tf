@@ -15,6 +15,9 @@ locals {
   connector_oci_vcn        = contains(keys(local.config), "connector_oci_vcn")
   connector_vmware_sdwan   = contains(keys(local.config), "connector_vmware_sdwan")
 
+  # internet application resource keys
+  internet_application     = contains(keys(local.config), "internet_application")
+
   # service resource keys
   service_fortinet         = contains(keys(local.config), "service_fortinet")
   service_pan              = contains(keys(local.config), "service_pan")

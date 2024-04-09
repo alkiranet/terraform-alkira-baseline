@@ -73,51 +73,81 @@ locals {
       segment              = lookup(data.alkira_segment.segment, policy.segment, null).id
       rule_list            = lookup(data.alkira_policy_rule_list.rule_list, policy.rule_list, null).id
 
+      # get internet application implicit ids
+      from_internet_applications          = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_internet_application.from, connector, null).implicit_group_id if lookup(data.alkira_internet_application.from, connector, null).implicit_group_id != null] : [],
+      to_internet_applications            = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_internet_application.to, connector, null).implicit_group_id if lookup(data.alkira_internet_application.to, connector, null).implicit_group_id != null] : [],
+
       # get aws implicit ids
-      from_aws_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id != null] : [],
-      to_aws_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id != null] : [],
+      from_aws_connectors                 = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id != null] : [],
+      to_aws_connectors                   = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id != null] : [],
 
       # get azure implicit ids
-      from_azure_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id != null] : [],
-      to_azure_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id != null] : [],
+      from_azure_connectors               = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id != null] : [],
+      to_azure_connectors                 = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id != null] : [],
 
       # get gcp implicit ids
-      from_gcp_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id != null] : [],
-      to_gcp_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id != null] : [],
+      from_gcp_connectors                 = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id != null] : [],
+      to_gcp_connectors                   = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id != null] : [],
+
+      # get internet connector implicit ids
+      from_internet_connectors            = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_internet_exit.from, connector, null).implicit_group_id if lookup(data.alkira_connector_internet_exit.from, connector, null).implicit_group_id != null] : [],
+      to_internet_connectors              = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_internet_exit.to, connector, null).implicit_group_id if lookup(data.alkira_connector_internet_exit.to, connector, null).implicit_group_id != null] : [],
+
+      # get ipsec connector implicit ids
+      from_ipsec_connectors               = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_ipsec.from, connector, null).implicit_group_id if lookup(data.alkira_connector_ipsec.from, connector, null).implicit_group_id != null] : [],
+      to_ipsec_connectors                 = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_ipsec.to, connector, null).implicit_group_id if lookup(data.alkira_connector_ipsec.to, connector, null).implicit_group_id != null] : [],
 
       # get oci implicit ids
-      from_oci_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id != null] : [],
-      to_oci_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id != null] : [],
+      from_oci_connectors                 = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id != null] : [],
+      to_oci_connectors                   = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id != null] : [],
 
       # get cisco sdwan implicit ids
-      from_cisco_sdwan_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id != null] : [],
-      to_cisco_sdwan_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id != null] : [],
+      from_cisco_sdwan_connectors         = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id != null] : [],
+      to_cisco_sdwan_connectors           = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id != null] : [],
 
       # get aruba edge implicit ids
-      from_aruba_edge_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id != null] : [],
-      to_aruba_edge_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id != null] : [],
+      from_aruba_edge_connectors          = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id != null] : [],
+      to_aruba_edge_connectors            = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id != null] : [],
+
+      # get azure expressroute implicit ids
+      from_azure_expressroute_connectors  = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_azure_expressroute.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_expressroute.from, connector, null).implicit_group_id != null] : [],
+      to_azure_expressroute_connectors    = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_azure_expressroute.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_expressroute.to, connector, null).implicit_group_id != null] : [],
+
+      # get vmware sdwan implicit ids
+      from_vmware_sdwan_connectors        = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_vmware_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_vmware_sdwan.from, connector, null).implicit_group_id != null] : [],
+      to_vmware_sdwan_connectors          = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_vmware_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_vmware_sdwan.to, connector, null).implicit_group_id != null] : [],
 
       # get standard group ids
-      from_groups          = length(policy.from_groups) > 0 ? [for group in policy.from_groups : lookup(data.alkira_group.from, group, null).id if lookup(data.alkira_group.from, group, null).id != null] : [],
-      to_groups            = length(policy.to_groups) > 0 ? [for group in policy.to_groups : lookup(data.alkira_group.to, group, null).id if lookup(data.alkira_group.to, group, null).id != null] : [],
+      from_groups                         = length(policy.from_groups) > 0 ? [for group in policy.from_groups : lookup(data.alkira_group.from, group, null).id if lookup(data.alkira_group.from, group, null).id != null] : [],
+      to_groups                           = length(policy.to_groups) > 0 ? [for group in policy.to_groups : lookup(data.alkira_group.to, group, null).id if lookup(data.alkira_group.to, group, null).id != null] : [],
 
       # concat id types in single list for 'two' and 'from'
       from_group_list      = distinct(concat(
+        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_internet_application.from, connector, null).implicit_group_id if lookup(data.alkira_internet_application.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.from, connector, null).implicit_group_id != null] : [],
+        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_vmware_sdwan.from, connector, null).implicit_group_id if lookup(data.alkira_connector_vmware_sdwan.from, connector, null).implicit_group_id != null] : [],
+        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_internet_exit.from, connector, null).implicit_group_id if lookup(data.alkira_connector_internet_exit.from, connector, null).implicit_group_id != null] : [],
+        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_ipsec.from, connector, null).implicit_group_id if lookup(data.alkira_connector_ipsec.from, connector, null).implicit_group_id != null] : [],
+        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_azure_expressroute.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_expressroute.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_groups) > 0 ? [for group in policy.from_groups : lookup(data.alkira_group.from, group, null).id if lookup(data.alkira_group.from, group, null).id != null] : []
       )),
       to_group_list        = distinct(concat(
+        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_internet_application.to, connector, null).implicit_group_id if lookup(data.alkira_internet_application.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id if lookup(data.alkira_connector_oci_vcn.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_cisco_sdwan.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aruba_edge.to, connector, null).implicit_group_id != null] : [],
+        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_vmware_sdwan.to, connector, null).implicit_group_id if lookup(data.alkira_connector_vmware_sdwan.to, connector, null).implicit_group_id != null] : [],
+        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_internet_exit.to, connector, null).implicit_group_id if lookup(data.alkira_connector_internet_exit.to, connector, null).implicit_group_id != null] : [],
+        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_ipsec.to, connector, null).implicit_group_id if lookup(data.alkira_connector_ipsec.to, connector, null).implicit_group_id != null] : [],
+        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_azure_expressroute.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_expressroute.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_groups) > 0 ? [for group in policy.to_groups : lookup(data.alkira_group.to, group, null).id if lookup(data.alkira_group.to, group, null).id != null] : []
       ))
     }

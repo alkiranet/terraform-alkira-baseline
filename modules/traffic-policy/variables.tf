@@ -25,11 +25,14 @@ variable "traffic_rule_data" {
     description               = optional(string, "Created by Terraform")
     rule_action               = optional(string, "ALLOW")
     dscp                      = optional(string, "any")
-    protocol                  = optional(string, "any")
-    src_ports                 = optional(list(string), ["any"])
-    dst_ports                 = optional(list(string), ["any"])
-    src_prefix_list           = string
-    dst_prefix_list           = string
+    protocol                  = optional(string, "tcp")
+    src_ports                 = optional(list(string))
+    dst_ports                 = optional(list(string))
+    src_ip                    = optional(string)
+    dst_ip                    = optional(string)
+    src_prefix_list           = optional(string)
+    dst_prefix_list           = optional(string)
+    application               = optional(string)
     service_types             = optional(list(string))
   }))
   default = []

@@ -173,7 +173,9 @@ module "internet_application" {
     module.connector_aws_vpc,
     module.connector_azure_vnet,
     module.connector_gcp_vpc,
-    module.connector_oci_vcn
+    module.connector_ipsec,
+    module.connector_oci_vcn,
+    module.connector_vmware_sdwan
   ]
 
 }
@@ -264,7 +266,11 @@ module "traffic_policy" {
   # pass data
   traffic_policy_data  = local.config["traffic_policy"]
 
-  depends_on           = [module.group, module.segment, module.traffic_rule_list]
+  depends_on = [
+    module.group,
+    module.segment,
+    module.traffic_rule_list
+  ]
 
 }
 
@@ -280,7 +286,10 @@ module "traffic_rule" {
   # pass data
   traffic_rule_data  = local.config["traffic_rule"]
 
-  depends_on = [module.prefix_list]
+  depends_on = [
+    module.prefix_list,
+    module.internet_application
+  ]
 
 }
 

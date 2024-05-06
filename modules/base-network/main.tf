@@ -22,7 +22,23 @@ resource "alkira_group" "group" {
 
   for_each = {
     for o in var.group_data : o.name => o
-    if var.group == true
+    if var.group == true && o.type == "connector"
+  }
+
+  name        = each.value.name
+  description = each.value.description
+
+}
+
+/*
+alkira_group_user
+https://registry.terraform.io/providers/alkiranet/alkira/latest/docs/resources/group_user
+*/
+resource "alkira_group_user" "group" {
+
+  for_each = {
+    for o in var.group_data : o.name => o
+    if var.group == true && o.type == "user"
   }
 
   name        = each.value.name

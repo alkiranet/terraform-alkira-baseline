@@ -55,24 +55,9 @@ data "alkira_group" "to" {
 
 }
 
-data "alkira_internet_application" "from" {
-
-  for_each = {
-    for k, v in toset(local.filter_from_connectors) : k => v
-  }
-
-  name = each.key
-
-}
-
-data "alkira_internet_application" "to" {
-
-  for_each = {
-    for k, v in toset(local.filter_to_connectors) : k => v
-  }
-
-  name = each.key
-
+data "alkira_internet_application" "app" {
+  for_each = toset(local.filter_applications)
+  name     = each.value
 }
 
 data "alkira_connector_aws_vpc" "from" {

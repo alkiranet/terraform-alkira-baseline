@@ -16,8 +16,11 @@ resource "alkira_policy_rule" "rule" {
   protocol                  = each.value.protocol
   src_ports                 = each.value.src_ports
   dst_ports                 = each.value.dst_ports
+  src_ip                    = each.value.src_ip
+  dst_ip                    = each.value.dst_ip
   src_prefix_list_id        = each.value.src_prefix_list
   dst_prefix_list_id        = each.value.dst_prefix_list
+  internet_application_id   = each.value.application
   rule_action_service_types = each.value.service_types
 
 }

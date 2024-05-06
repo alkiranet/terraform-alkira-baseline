@@ -1,8 +1,9 @@
 locals {
-  filter_src_rules  = var.traffic_rule_data[*].src_prefix_list
-  filter_dst_rules  = var.traffic_rule_data[*].dst_prefix_list
-  filter_rule_lists = var.traffic_policy_data[*].rule_list
-  filter_segments   = var.traffic_policy_data[*].segment
+  filter_applications  = length(var.traffic_rule_data) > 0 ? [for application in var.traffic_rule_data : application.application if application.application != null] : []
+  filter_src_rules     = length(var.traffic_rule_data) > 0 ? [for src_rule in var.traffic_rule_data : src_rule.src_prefix_list if src_rule.src_prefix_list != null] : []
+  filter_dst_rules     = length(var.traffic_rule_data) > 0 ? [for dst_rule in var.traffic_rule_data : dst_rule.dst_prefix_list if dst_rule.dst_prefix_list != null] : []
+  filter_rule_lists    = var.traffic_policy_data[*].rule_list
+  filter_segments      = var.traffic_policy_data[*].segment
 
   filter_rules = flatten([
     for list in var.traffic_rule_list_data : [
@@ -57,8 +58,11 @@ locals {
         dscp            = rule.dscp
         protocol        = rule.protocol
         description     = rule.description
-        src_prefix_list = lookup(data.alkira_policy_prefix_list.src, rule.src_prefix_list, null).id
-        dst_prefix_list = lookup(data.alkira_policy_prefix_list.dst, rule.dst_prefix_list, null).id
+        src_ip          = rule.src_ip != null ? rule.src_ip : null
+        dst_ip          = rule.dst_ip != null ? rule.dst_ip : null
+        application     = rule.application != null ? lookup(data.alkira_internet_application.app, rule.application, null).id : null
+        src_prefix_list = rule.src_prefix_list != null ? lookup(data.alkira_policy_prefix_list.src, rule.src_prefix_list, null).id : null
+        dst_prefix_list = rule.dst_prefix_list != null ? lookup(data.alkira_policy_prefix_list.dst, rule.dst_prefix_list, null).id : null
         src_ports       = toset(rule.src_ports)
         dst_ports       = toset(rule.dst_ports)
         service_types   = rule.service_types
@@ -72,10 +76,6 @@ locals {
       description          = policy.description
       segment              = lookup(data.alkira_segment.segment, policy.segment, null).id
       rule_list            = lookup(data.alkira_policy_rule_list.rule_list, policy.rule_list, null).id
-
-      # get internet application implicit ids
-      from_internet_applications          = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_internet_application.from, connector, null).implicit_group_id if lookup(data.alkira_internet_application.from, connector, null).implicit_group_id != null] : [],
-      to_internet_applications            = length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_internet_application.to, connector, null).implicit_group_id if lookup(data.alkira_internet_application.to, connector, null).implicit_group_id != null] : [],
 
       # get aws implicit ids
       from_aws_connectors                 = length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id != null] : [],
@@ -123,7 +123,6 @@ locals {
 
       # concat id types in single list for 'two' and 'from'
       from_group_list      = distinct(concat(
-        length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_internet_application.from, connector, null).implicit_group_id if lookup(data.alkira_internet_application.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.from, connector, null).implicit_group_id != null] : [],
         length(policy.from_connectors) > 0 ? [for connector in policy.from_connectors : lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.from, connector, null).implicit_group_id != null] : [],
@@ -137,7 +136,6 @@ locals {
         length(policy.from_groups) > 0 ? [for group in policy.from_groups : lookup(data.alkira_group.from, group, null).id if lookup(data.alkira_group.from, group, null).id != null] : []
       )),
       to_group_list        = distinct(concat(
-        length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_internet_application.to, connector, null).implicit_group_id if lookup(data.alkira_internet_application.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_aws_vpc.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id if lookup(data.alkira_connector_azure_vnet.to, connector, null).implicit_group_id != null] : [],
         length(policy.to_connectors) > 0 ? [for connector in policy.to_connectors : lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id if lookup(data.alkira_connector_gcp_vpc.to, connector, null).implicit_group_id != null] : [],

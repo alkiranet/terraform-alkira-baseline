@@ -22,6 +22,7 @@ variable "group_data" {
   type = list(object({
     name        = string
     description = optional(string, "Created by Terraform")
+    type        = optional(string, "connector")
   }))
   default = []
 }
